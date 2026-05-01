@@ -138,12 +138,12 @@
         <p class="kicker">Step 4</p>
         <h2>Category differences</h2>
         <p>
-          Boxplots show how each category spreads out for the selected nutrient. Wider ranges reveal
-          categories where food choices vary the most.
+          Range lines show the lowest and highest values in each category, with dots marking the
+          median. Wider ranges reveal categories where food choices vary the most.
         </p>
       </div>
 
-      <div class="control-panel compact" aria-label="Boxplot controls">
+      <div class="control-panel compact" aria-label="Range comparison controls">
         <label>
           Nutrient distribution
           <select id="boxNutrientSelect"></select>
@@ -157,7 +157,7 @@
 
       <div class="compare-layout">
         <figure class="chart-shell tall">
-          <svg id="boxPlot" role="img" aria-label="Boxplots comparing selected nutrient by category"></svg>
+          <svg id="boxPlot" role="img" aria-label="Range and median comparison for the selected nutrient by category"></svg>
         </figure>
 
         <aside class="food-visual-panel" aria-label="Food categories illustrated">
