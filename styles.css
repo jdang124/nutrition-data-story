@@ -211,6 +211,17 @@ main {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fbfaf5;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  transform-origin: center;
+}
+
+.age-illustration:hover,
+.meaning-art:hover,
+.food-card:hover,
+.food-visual-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 22px 55px rgba(33, 43, 36, 0.18);
+  border-color: rgba(23, 111, 115, 0.45);
 }
 
 .age-art {
@@ -404,6 +415,8 @@ main {
   border-radius: 8px;
   padding: 16px;
   background: #fbfaf5;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  transform-origin: center;
 }
 
 .food-card h4 {
@@ -534,6 +547,8 @@ output {
   border-radius: 8px;
   background: #fbfaf5;
   padding: 12px;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  transform-origin: center;
 }
 
 .food-art {
