@@ -525,6 +525,8 @@ output {
   background: var(--panel);
   box-shadow: var(--shadow);
   padding: 22px;
+  max-height: 680px;
+  overflow: auto;
 }
 
 .food-visual-panel h3 {
@@ -655,6 +657,122 @@ output {
   transform: rotate(28deg);
 }
 
+.food-art.bread {
+  background: #fff1e0;
+}
+
+.food-art.bread::before {
+  width: 76px;
+  height: 44px;
+  left: 10px;
+  top: 32px;
+  border-radius: 40px 40px 12px 12px;
+  background: #bf7b3d;
+}
+
+.food-art.bread::after {
+  width: 54px;
+  height: 6px;
+  left: 22px;
+  top: 48px;
+  border-radius: 999px;
+  background: #f4c27a;
+  box-shadow: 0 13px 0 #f4c27a;
+}
+
+.food-art.dessert {
+  background: #fff0f3;
+}
+
+.food-art.dessert::before {
+  width: 70px;
+  height: 42px;
+  left: 13px;
+  top: 37px;
+  border-radius: 12px 12px 28px 28px;
+  background: #d9573f;
+  clip-path: polygon(0 12%, 100% 0, 82% 100%, 10% 100%);
+}
+
+.food-art.dessert::after {
+  width: 54px;
+  height: 12px;
+  left: 25px;
+  top: 29px;
+  border-radius: 999px;
+  background: #fffdf5;
+  box-shadow: 8px 14px 0 -3px #f0bd35;
+}
+
+.food-art.fried {
+  background: #fff6dc;
+}
+
+.food-art.fried::before {
+  width: 76px;
+  height: 34px;
+  left: 11px;
+  top: 46px;
+  border-radius: 12px 12px 22px 22px;
+  background: #c6553d;
+}
+
+.food-art.fried::after {
+  width: 9px;
+  height: 46px;
+  left: 30px;
+  top: 18px;
+  border-radius: 999px;
+  background: #f0bd35;
+  box-shadow: 15px -3px 0 #f0bd35, 30px 2px 0 #f0bd35;
+}
+
+.food-art.sauce {
+  background: #f5efe7;
+}
+
+.food-art.sauce::before {
+  width: 58px;
+  height: 44px;
+  left: 19px;
+  top: 34px;
+  border-radius: 10px 10px 22px 22px;
+  background: #fffdf5;
+  border: 5px solid #176f73;
+}
+
+.food-art.sauce::after {
+  width: 40px;
+  height: 17px;
+  left: 30px;
+  top: 47px;
+  border-radius: 999px;
+  background: #c6553d;
+}
+
+.food-art.sweet {
+  background: #f7eff8;
+}
+
+.food-art.sweet::before {
+  width: 46px;
+  height: 28px;
+  left: 25px;
+  top: 35px;
+  border-radius: 999px;
+  background: #c28b28;
+}
+
+.food-art.sweet::after {
+  width: 18px;
+  height: 18px;
+  left: 18px;
+  top: 40px;
+  background: #7e5a89;
+  clip-path: polygon(0 50%, 100% 0, 100% 100%);
+  box-shadow: 54px 0 0 #7e5a89;
+}
+
 .food-visual-card h4 {
   margin: 0 0 4px;
   font-size: 18px;
@@ -734,17 +852,27 @@ path.axis,
   stroke: var(--ink);
 }
 
-.box-line,
-.whisker,
-.median {
-  stroke: var(--ink);
-  stroke-width: 2;
+.nutrient-track {
+  stroke: #e8ece4;
+  stroke-width: 16;
+  stroke-linecap: round;
 }
 
-.box-fill {
-  fill: rgba(23, 111, 115, 0.18);
-  stroke: var(--teal);
-  stroke-width: 1.5;
+.nutrient-range {
+  stroke-width: 10;
+  stroke-linecap: round;
+  opacity: 0.78;
+}
+
+.nutrient-dot {
+  stroke: #fff;
+  stroke-width: 3;
+}
+
+.value-label {
+  fill: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
 }
 
 .detail-panel {

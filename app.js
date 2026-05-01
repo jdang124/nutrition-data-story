@@ -287,7 +287,7 @@
     els.scatterSubtitle.textContent = `${rows.length} foods shown${state.category === "All categories" ? "" : ` in ${state.category}`}.`;
 
     drawGrid(els.scatterPlot, x, y, xDomain, yDomain, margin, innerWidth, innerHeight);
-    drawAxisLabels(els.scatterPlot, width, height, margin, "Calories (kcal)", `${metric.label} (${metric.unit})`);
+    drawAxisLabels(els.scatterPlot, width, height, margin, "Calories", axisMetricLabel(metric));
 
     rows.forEach((row) => {
       const point = createSvgElement("circle", {
@@ -468,8 +468,9 @@
     }).filter((group) => group.values.length);
     renderFoodVisuals(groups, metric);
 
+    els.boxPlot.style.height = `${Math.max(560, groups.length * 46 + 96)}px`;
     const { width, height } = svgSize(els.boxPlot, 560);
-    const margin = { top: 24, right: 28, bottom: 44, left: width < 640 ? 132 : 230 };
+    const margin = { top: 24, right: 72, bottom: 44, left: width < 640 ? 132 : 230 };
     const innerWidth = width - margin.left - margin.right;
     const rowHeight = (height - margin.top - margin.bottom) / groups.length;
     const max = Math.max(...groups.flatMap((group) => group.values)) * 1.08 || 1;
@@ -499,8 +500,8 @@
 
     groups.forEach((group, index) => {
       const center = margin.top + rowHeight * index + rowHeight / 2;
-      const boxHeight = Math.min(24, rowHeight * 0.46);
-      const { min, q1, median, q3, max: groupMax } = group.stats;
+      const { min, median, max: groupMax } = group.stats;
+      const color = palette[index % palette.length];
 
       const label = createSvgElement("text", {
         class: "axis",
@@ -512,37 +513,34 @@
       els.boxPlot.appendChild(label);
 
       els.boxPlot.appendChild(createSvgElement("line", {
-        class: "whisker",
-        x1: x(min),
-        x2: x(groupMax),
+        class: "nutrient-track",
+        x1: margin.left,
+        x2: margin.left + innerWidth,
         y1: center,
         y2: center
       }));
-      els.boxPlot.appendChild(createSvgElement("rect", {
-        class: "box-fill",
-        x: x(q1),
-        y: center - boxHeight / 2,
-        width: Math.max(2, x(q3) - x(q1)),
-        height: boxHeight,
-        rx: 3
-      }));
       els.boxPlot.appendChild(createSvgElement("line", {
-        class: "median",
-        x1: x(median),
-        x2: x(median),
-        y1: center - boxHeight / 2 - 4,
-        y2: center + boxHeight / 2 + 4
+        class: "nutrient-range",
+        x1: x(min),
+        x2: x(groupMax),
+        y1: center,
+        y2: center,
+        stroke: color
       }));
-
-      [min, groupMax].forEach((value) => {
-        els.boxPlot.appendChild(createSvgElement("line", {
-          class: "box-line",
-          x1: x(value),
-          x2: x(value),
-          y1: center - 8,
-          y2: center + 8
-        }));
+      els.boxPlot.appendChild(createSvgElement("circle", {
+        class: "nutrient-dot",
+        cx: x(median),
+        cy: center,
+        r: 7,
+        fill: color
+      }));
+      const valueLabel = createSvgElement("text", {
+        class: "value-label",
+        x: Math.min(margin.left + innerWidth + 10, x(median) + 12),
+        y: center + 4
       });
+      valueLabel.textContent = formatValue(median, metric);
+      els.boxPlot.appendChild(valueLabel);
     });
 
     const axisTitle = createSvgElement("text", {
@@ -551,7 +549,7 @@
       y: height - 4,
       "text-anchor": "middle"
     });
-    axisTitle.textContent = `${metric.label} (${metric.unit})`;
+    axisTitle.textContent = axisMetricLabel(metric);
     els.boxPlot.appendChild(axisTitle);
   }
 
@@ -603,7 +601,7 @@
 
   function renderFoodVisuals(groups, metric) {
     if (!els.foodVisuals) return;
-    const cards = groups.slice(0, 4).map((group) => {
+    const cards = groups.map((group) => {
       const visual = visualForCategory(group.category);
       const median = group.stats ? group.stats.median : 0;
       return {
@@ -637,13 +635,32 @@
     if (name.includes("juice") || name.includes("beverage") || name.includes("drink") || name.includes("cider")) {
       return { kind: "drink", alt: "Cartoon drink" };
     }
-    if (name.includes("cake") || name.includes("pie") || name.includes("bread") || name.includes("baked") || name.includes("sweet")) {
+    if (name.includes("bread") || name.includes("roll") || name.includes("bagel")) {
+      return { kind: "bread", alt: "Cartoon bread" };
+    }
+    if (name.includes("cake") || name.includes("pie") || name.includes("cobbler") || name.includes("crisp")) {
+      return { kind: "dessert", alt: "Cartoon dessert" };
+    }
+    if (name.includes("chip") || name.includes("fried") || name.includes("fries") || name.includes("fast food")) {
+      return { kind: "fried", alt: "Cartoon fried food" };
+    }
+    if (name.includes("dip") || name.includes("sauce") || name.includes("gravy") || name.includes("syrup") || name.includes("jam")) {
+      return { kind: "sauce", alt: "Cartoon sauce" };
+    }
+    if (name.includes("sweet") || name.includes("candy")) {
+      return { kind: "sweet", alt: "Cartoon sweets" };
+    }
+    if (name.includes("baked")) {
       return { kind: "baked", alt: "Cartoon baked food" };
     }
     if (name.includes("vegetable") || name.includes("onion") || name.includes("tomato") || name.includes("potato") || name.includes("fries")) {
       return { kind: "vegetable", alt: "Cartoon vegetables" };
     }
     return { kind: "fruit", alt: "Cartoon fruits" };
+  }
+
+  function axisMetricLabel(metric) {
+    return metric.key === "calories" ? "Calories" : `${metric.label} (${metric.unit})`;
   }
 
   function buildRecommendations(profile, limit) {
