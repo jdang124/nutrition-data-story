@@ -431,10 +431,19 @@
     moveTooltip(event);
   }
 
+  function showRangeTooltip(event, group, metric) {
+    els.tooltip.hidden = false;
+    els.tooltip.innerHTML = `<strong>${escapeHtml(group.category)}</strong><br>Median ${escapeHtml(metric.label)}: ${formatValue(group.stats.median, metric)}<br>Range: ${formatValue(group.stats.min, metric)} to ${formatValue(group.stats.max, metric)}<br>${group.values.length} foods`;
+    moveTooltip(event);
+  }
+
   function moveTooltip(event) {
     const offset = 14;
-    els.tooltip.style.left = `${Math.min(window.innerWidth - 280, event.clientX + offset)}px`;
-    els.tooltip.style.top = `${Math.min(window.innerHeight - 150, event.clientY + offset)}px`;
+    const bounds = event.target && event.target.getBoundingClientRect ? event.target.getBoundingClientRect() : null;
+    const clientX = Number.isFinite(event.clientX) && event.clientX > 0 ? event.clientX : (bounds ? bounds.right : 0);
+    const clientY = Number.isFinite(event.clientY) && event.clientY > 0 ? event.clientY : (bounds ? bounds.top : 0);
+    els.tooltip.style.left = `${Math.min(window.innerWidth - 280, clientX + offset)}px`;
+    els.tooltip.style.top = `${Math.min(window.innerHeight - 150, clientY + offset)}px`;
   }
 
   function hideTooltip() {
@@ -453,19 +462,20 @@
 
   function renderBoxPlot() {
     const metric = metricFor(state.boxNutrient);
-    const counts = [...categoryCounts(data).entries()]
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, state.categoryLimit)
-      .map(([category]) => category);
+    const categoryMap = data.reduce((map, row) => {
+      if (!Number.isFinite(row[state.boxNutrient])) return map;
+      if (!map.has(row.category)) map.set(row.category, []);
+      map.get(row.category).push(row[state.boxNutrient]);
+      return map;
+    }, new Map());
 
-    const groups = counts.map((category) => {
-      const values = data
-        .filter((row) => row.category === category)
-        .map((row) => row[state.boxNutrient])
-        .filter(Number.isFinite)
-        .sort((a, b) => a - b);
-      return { category, values, stats: summarize(values) };
-    }).filter((group) => group.values.length);
+    const groups = [...categoryMap.entries()]
+      .map(([category, values]) => {
+        const sortedValues = values.sort((a, b) => a - b);
+        return { category, values: sortedValues, stats: summarize(sortedValues) };
+      })
+      .sort((a, b) => b.stats.median - a.stats.median || b.values.length - a.values.length || a.category.localeCompare(b.category))
+      .slice(0, state.categoryLimit);
     renderFoodVisuals(groups, metric);
 
     els.boxPlot.style.height = `${Math.max(560, groups.length * 46 + 96)}px`;
@@ -527,13 +537,22 @@
         y2: center,
         stroke: color
       }));
-      els.boxPlot.appendChild(createSvgElement("circle", {
+      const medianDot = createSvgElement("circle", {
         class: "nutrient-dot",
         cx: x(median),
         cy: center,
         r: 7,
-        fill: color
-      }));
+        fill: color,
+        tabindex: 0,
+        role: "img",
+        "aria-label": `${group.category} median ${metric.label}: ${formatValue(median, metric)}`
+      });
+      medianDot.addEventListener("mouseenter", (event) => showRangeTooltip(event, group, metric));
+      medianDot.addEventListener("mousemove", moveTooltip);
+      medianDot.addEventListener("mouseleave", hideTooltip);
+      medianDot.addEventListener("focus", (event) => showRangeTooltip(event, group, metric));
+      medianDot.addEventListener("blur", hideTooltip);
+      els.boxPlot.appendChild(medianDot);
       const valueLabel = createSvgElement("text", {
         class: "value-label",
         x: Math.min(margin.left + innerWidth + 10, x(median) + 12),
@@ -583,13 +602,12 @@
       reason.textContent = recommendationReason(row, profile);
 
       const list = document.createElement("dl");
-      ["calories", "protein", "fat", "iron"].forEach((key) => {
-        const metric = metricFor(key);
+      allMetrics.forEach((metric) => {
         const item = document.createElement("div");
         const dt = document.createElement("dt");
         const dd = document.createElement("dd");
         dt.textContent = metric.label;
-        dd.textContent = formatValue(row[key], metric);
+        dd.textContent = formatValue(row[metric.key], metric);
         item.append(dt, dd);
         list.appendChild(item);
       });

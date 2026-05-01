@@ -867,6 +867,15 @@ path.axis,
 .nutrient-dot {
   stroke: #fff;
   stroke-width: 3;
+  cursor: help;
+  outline: none;
+  transition: r 160ms ease, stroke-width 160ms ease;
+}
+
+.nutrient-dot:hover,
+.nutrient-dot:focus {
+  r: 9;
+  stroke-width: 4;
 }
 
 .value-label {
