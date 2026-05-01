@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nutrition Is a Balancing Act</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <nav class="topbar" aria-label="Page sections">
+      <a href="#explore">Explore</a>
+      <a href="#age">Age Groups</a>
+      <a href="#compare">Compare</a>
+      <a href="#meaning">Meaning</a>
+    </nav>
+    <div class="hero__content">
+      <p class="kicker">Food nutrition dataset</p>
+      <h1>Nutrition is more than a healthy or unhealthy label.</h1>
+      <p>
+        Everyday foods hide trade-offs. Some are calorie dense, some bring protein with extra fat,
+        and some categories look similar until you compare the nutrients side by side.
+      </p>
+    </div>
+    <div class="hero__stats" aria-label="Dataset summary">
+      <div><strong id="statFoods">205</strong><span>foods</span></div>
+      <div><strong id="statCategories">0</strong><span>categories</span></div>
+      <div><strong>6</strong><span>nutrients</span></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="story-band intro">
+      <div>
+        <h2>What the data asks us to notice</h2>
+        <p>
+          People often judge food from a single signal: calories, sugar, fat, or a familiar category name.
+          This narrative lets you filter, compare, hover, and click through the data so those assumptions
+          become testable.
+        </p>
+      </div>
+      <aside>
+        <span class="mini-label">Guiding question</span>
+        <p>Which foods offer the nutrition you want, and what trade-offs come with them?</p>
+      </aside>
+    </section>
+
+    <section id="explore" class="workspace">
+      <div class="section-heading">
+        <p class="kicker">Step 2 and 3</p>
+        <h2>Explore calories and nutrient trade-offs</h2>
+        <p>
+          Filter by category and switch the comparison nutrient to see how calories relate to protein,
+          carbs, fat, iron, and vitamin C.
+        </p>
+      </div>
+
+      <div class="control-panel" aria-label="Interactive chart controls">
+        <label>
+          Category
+          <select id="categorySelect"></select>
+        </label>
+        <label>
+          Compare calories with
+          <select id="nutrientSelect"></select>
+        </label>
+        <label>
+          Color points by
+          <select id="colorSelect"></select>
+        </label>
+      </div>
+
+      <div class="viz-layout">
+        <figure class="chart-shell">
+          <div class="chart-title-row">
+            <div>
+              <h3 id="scatterTitle">Calories vs nutrient</h3>
+              <p id="scatterSubtitle">Each point is one food.</p>
+            </div>
+            <button id="resetSelection" type="button">Clear selection</button>
+          </div>
+          <svg id="scatterPlot" role="img" aria-label="Scatterplot comparing calories and selected nutrient"></svg>
+        </figure>
+
+        <aside class="detail-panel" aria-live="polite">
+          <span class="mini-label">Food-level details</span>
+          <h3 id="detailName">Select a food</h3>
+          <p id="detailCategory">Hover or click a point to inspect its full nutrition profile.</p>
+          <dl id="detailMetrics"></dl>
+        </aside>
+      </div>
+    </section>
+
+    <section id="age" class="workspace age-workspace">
+      <div class="section-heading">
+        <p class="kicker">Personalized lens</p>
+        <h2>Choose an age group for more relevant food ideas</h2>
+        <p>
+          The dataset stays the same, but the recommendations change based on common nutrition priorities
+          for each stage of life.
+        </p>
+      </div>
+
+      <div class="age-layout">
+        <aside class="age-panel">
+          <label>
+            Age group
+            <select id="ageGroupSelect"></select>
+          </label>
+          <div id="ageGroupImage" class="age-illustration age-art young-adult" role="img" aria-label="Young adult nutrition illustration">
+            <span class="age-head"></span>
+            <span class="age-body"></span>
+            <span class="age-object"></span>
+          </div>
+          <div class="age-summary">
+            <span class="mini-label">Focus</span>
+            <h3 id="ageTitle">Young adult</h3>
+            <p id="ageDescription"></p>
+          </div>
+          <ul id="agePriorities" class="priority-list"></ul>
+        </aside>
+
+        <div class="recommendation-area">
+          <div class="recommendation-header">
+            <div>
+              <span class="mini-label">Food recommendations</span>
+              <h3 id="recommendationTitle">Recommended foods</h3>
+            </div>
+            <p id="recommendationNote"></p>
+          </div>
+          <div id="recommendationCards" class="recommendation-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare" class="workspace">
+      <div class="section-heading">
+        <p class="kicker">Step 4</p>
+        <h2>Category differences</h2>
+        <p>
+          Boxplots show how each category spreads out for the selected nutrient. Wider ranges reveal
+          categories where food choices vary the most.
+        </p>
+      </div>
+
+      <div class="control-panel compact" aria-label="Boxplot controls">
+        <label>
+          Nutrient distribution
+          <select id="boxNutrientSelect"></select>
+        </label>
+        <label>
+          Show top categories by item count
+          <input id="categoryLimit" type="range" min="6" max="18" step="1" value="10">
+          <output id="categoryLimitOutput">10</output>
+        </label>
+      </div>
+
+      <div class="compare-layout">
+        <figure class="chart-shell tall">
+          <svg id="boxPlot" role="img" aria-label="Boxplots comparing selected nutrient by category"></svg>
+        </figure>
+
+        <aside class="food-visual-panel" aria-label="Food categories illustrated">
+          <span class="mini-label">Visual comparison</span>
+          <h3>Foods in the category view</h3>
+          <div id="foodVisuals" class="food-visual-grid"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="meaning" class="story-band meaning">
+      <div>
+        <p class="kicker">Step 6</p>
+        <h2>Real-life meaning</h2>
+        <p>
+          For younger people, the story is often about growth, energy, and learning how foods differ.
+          For adults, the same data can support choices around long-term health, weight management,
+          heart disease risk, and diabetes risk.
+        </p>
+      </div>
+      <div class="meaning-grid four-up" aria-label="Age group nutrition priorities">
+        <article>
+          <div class="meaning-art age-art teen" role="img" aria-label="Younger eater nutrition visual">
+            <span class="age-head"></span>
+            <span class="age-body"></span>
+            <span class="age-object"></span>
+          </div>
+          <h3>Teens</h3>
+          <p>Focus on growth, steady energy, protein, iron, and vitamin C instead of judging foods by calories alone.</p>
+        </article>
+        <article>
+          <div class="meaning-art age-art young-adult" role="img" aria-label="Young adult nutrition visual">
+            <span class="age-head"></span>
+            <span class="age-body"></span>
+            <span class="age-object"></span>
+          </div>
+          <h3>Young adults</h3>
+          <p>Compare foods that fit busy schedules while balancing protein, calories, fat, and useful micronutrients.</p>
+        </article>
+        <article>
+          <div class="meaning-art age-art adult" role="img" aria-label="Adult nutrition visual">
+            <span class="age-head"></span>
+            <span class="age-body"></span>
+            <span class="age-object"></span>
+          </div>
+          <h3>Adults</h3>
+          <p>Compare several measures at once, especially when managing fat, carbs, and calorie density.</p>
+        </article>
+        <article>
+          <div class="meaning-art age-art older-adult" role="img" aria-label="Older adult nutrition visual">
+            <span class="age-head"></span>
+            <span class="age-body"></span>
+            <span class="age-object"></span>
+          </div>
+          <h3>Older adults</h3>
+          <p>Look for nutrient-dense foods that keep protein and micronutrients visible without letting calories dominate.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="finale">
+      <p class="kicker">Final takeaway</p>
+      <h2>Good nutrition is a balancing act.</h2>
+      <p>
+        The most useful food choices come from comparing multiple factors at once:
+        calories, protein, carbs, fat, and micronutrients all tell part of the story.
+      </p>
+    </section>
+  </main>
+
+  <div id="tooltip" class="tooltip" hidden></div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

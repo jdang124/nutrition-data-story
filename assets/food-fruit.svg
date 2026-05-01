@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 180" role="img" aria-label="Cartoon fruits">
+  <rect width="260" height="180" rx="18" fill="#fff7df"/>
+  <ellipse cx="130" cy="145" rx="84" ry="16" fill="#e6d4a4"/>
+  <circle cx="96" cy="104" r="38" fill="#d9573f"/>
+  <path d="M98 58c16-22 31-18 38-9-15 4-26 8-38 9z" fill="#4f8a57"/>
+  <path d="M96 68c-3-15 2-26 11-33" fill="none" stroke="#6b4d2e" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="154" cy="104" r="39" fill="#f0bd35"/>
+  <circle cx="165" cy="93" r="11" fill="#ffe08a" opacity=".7"/>
+  <path d="M71 124c23 24 89 27 118 0" fill="none" stroke="#6b4d2e" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="84" cy="98" r="5" fill="#17211b"/>
+  <circle cx="144" cy="99" r="5" fill="#17211b"/>
+  <path d="M89 116c8 8 20 8 28 0" fill="none" stroke="#17211b" stroke-width="5" stroke-linecap="round"/>
+</svg>

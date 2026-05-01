@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" role="img" aria-label="Young adult nutrition illustration">
+  <rect width="320" height="220" rx="20" fill="#eef5ea"/>
+  <circle cx="112" cy="68" r="34" fill="#d89a69"/>
+  <path d="M78 59c16-30 55-31 75 0-21 12-48 12-75 0z" fill="#5c3b2c"/>
+  <path d="M62 182c8-56 31-84 72-84s66 28 75 84z" fill="#176f73"/>
+  <rect x="206" y="80" width="52" height="86" rx="12" fill="#fffdf5" stroke="#17211b" stroke-width="5"/>
+  <path d="M218 107h28M218 125h22M218 143h18" stroke="#17211b" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="101" cy="70" r="5" fill="#17211b"/>
+  <circle cx="127" cy="70" r="5" fill="#17211b"/>
+  <path d="M105 86c9 7 19 7 28 0" fill="none" stroke="#17211b" stroke-width="5" stroke-linecap="round"/>
+  <ellipse cx="232" cy="178" rx="38" ry="12" fill="#c7d8b6"/>
+</svg>

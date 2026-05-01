@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 180" role="img" aria-label="Cartoon vegetables">
+  <rect width="260" height="180" rx="18" fill="#edf6e9"/>
+  <ellipse cx="130" cy="148" rx="88" ry="15" fill="#c7d8b6"/>
+  <path d="M76 124c-20-35-8-70 27-83 27 28 24 66-5 91z" fill="#5f9b5c"/>
+  <path d="M95 128c-9-30 2-57 30-82 30 22 36 58 17 86z" fill="#72ad65"/>
+  <path d="M139 130c-2-35 14-61 48-75 24 32 16 65-14 83z" fill="#4f8a57"/>
+  <path d="M65 132h130c-5 19-22 30-64 30-42 0-61-11-66-30z" fill="#d86b3e"/>
+  <path d="M91 132c5 16 19 25 41 25s37-9 43-25" fill="none" stroke="#b84f2f" stroke-width="5"/>
+  <circle cx="105" cy="108" r="5" fill="#17211b"/>
+  <circle cx="153" cy="108" r="5" fill="#17211b"/>
+  <path d="M116 122c9 6 21 6 30 0" fill="none" stroke="#17211b" stroke-width="5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" role="img" aria-label="Older adult nutrition illustration">
+  <rect width="320" height="220" rx="20" fill="#f4eff8"/>
+  <circle cx="112" cy="70" r="34" fill="#d9a67a"/>
+  <path d="M76 65c10-34 60-42 78-3-18-8-48-7-78 3z" fill="#d9d8d3"/>
+  <path d="M62 183c8-55 32-84 72-84s65 29 73 84z" fill="#67806b"/>
+  <circle cx="240" cy="124" r="42" fill="#fffdf5" stroke="#17211b" stroke-width="5"/>
+  <path d="M240 97v27l19 13" fill="none" stroke="#17211b" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="101" cy="72" r="5" fill="#17211b"/>
+  <circle cx="127" cy="72" r="5" fill="#17211b"/>
+  <path d="M105 88c9 7 19 7 28 0" fill="none" stroke="#17211b" stroke-width="5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 180" role="img" aria-label="Cartoon drink">
+  <rect width="260" height="180" rx="18" fill="#eaf6f7"/>
+  <ellipse cx="132" cy="150" rx="72" ry="14" fill="#bedadd"/>
+  <path d="M85 48h90l-11 103H96z" fill="#f8fbff" stroke="#176f73" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M94 88h72l-6 55H101z" fill="#f0b23b"/>
+  <path d="M116 48l-15-25h-31" fill="none" stroke="#c6553d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="115" cy="116" r="5" fill="#17211b"/>
+  <circle cx="145" cy="116" r="5" fill="#17211b"/>
+  <path d="M121 129c7 5 17 5 24 0" fill="none" stroke="#17211b" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="156" cy="77" r="10" fill="#ffdf79"/>
+</svg>

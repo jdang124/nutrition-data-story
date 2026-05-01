@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 180" role="img" aria-label="Cartoon baked food">
+  <rect width="260" height="180" rx="18" fill="#fff1e8"/>
+  <ellipse cx="130" cy="148" rx="88" ry="15" fill="#e5c2ad"/>
+  <path d="M68 116c10-48 39-76 82-73 33 2 54 25 58 73 2 23-18 37-69 37-51 0-76-14-71-37z" fill="#c98545"/>
+  <path d="M84 114c6-34 28-55 63-54 27 1 43 17 47 54" fill="none" stroke="#f2c07a" stroke-width="9" stroke-linecap="round"/>
+  <path d="M95 82c8 9 17 9 25 0M136 78c8 9 17 9 25 0M169 96c7 8 14 8 22 0" fill="none" stroke="#7b4a2f" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="112" cy="111" r="5" fill="#17211b"/>
+  <circle cx="157" cy="111" r="5" fill="#17211b"/>
+  <path d="M123 126c9 7 21 7 30 0" fill="none" stroke="#17211b" stroke-width="5" stroke-linecap="round"/>
+</svg>

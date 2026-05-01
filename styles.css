@@ -1,0 +1,890 @@
+:root {
+  --ink: #17211b;
+  --muted: #5f6b63;
+  --paper: #fbfaf5;
+  --panel: #ffffff;
+  --line: #d8ded4;
+  --sage: #67806b;
+  --teal: #176f73;
+  --tomato: #c6553d;
+  --gold: #c28b28;
+  --blue: #446c95;
+  --shadow: 0 18px 45px rgba(33, 43, 36, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+button,
+select,
+input {
+  font: inherit;
+}
+
+.hero {
+  min-height: 92vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 24px clamp(18px, 4vw, 64px) 34px;
+  background:
+    linear-gradient(90deg, rgba(23, 33, 27, 0.82), rgba(23, 33, 27, 0.42)),
+    url("nutrition-hero.png") center / cover;
+  color: #fffdf5;
+}
+
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.topbar a {
+  color: #fffdf5;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.hero__content {
+  max-width: 820px;
+  align-self: center;
+}
+
+.hero h1,
+.finale h2 {
+  font-size: clamp(46px, 7vw, 92px);
+  line-height: 0.94;
+  margin: 10px 0 22px;
+  max-width: 980px;
+  letter-spacing: 0;
+}
+
+.hero p {
+  max-width: 720px;
+  font-size: clamp(18px, 2vw, 24px);
+  margin: 0;
+}
+
+.kicker,
+.mini-label {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.hero__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.hero__stats div {
+  min-width: 142px;
+  padding: 16px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.36);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.13);
+  backdrop-filter: blur(6px);
+}
+
+.hero__stats strong {
+  display: block;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.hero__stats span {
+  color: rgba(255, 253, 245, 0.82);
+}
+
+main {
+  overflow: hidden;
+}
+
+.story-band,
+.workspace,
+.finale {
+  padding: clamp(54px, 8vw, 96px) clamp(18px, 4vw, 64px);
+}
+
+.story-band {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+  background: #eef1e8;
+}
+
+.story-band h2,
+.section-heading h2 {
+  font-size: clamp(30px, 4vw, 54px);
+  line-height: 1.03;
+  margin: 8px 0 16px;
+  letter-spacing: 0;
+}
+
+.story-band p,
+.section-heading p,
+.finale p {
+  color: var(--muted);
+  font-size: 18px;
+  max-width: 800px;
+}
+
+.intro aside {
+  border-left: 4px solid var(--tomato);
+  padding: 10px 0 10px 22px;
+}
+
+.intro aside p {
+  color: var(--ink);
+  font-size: 24px;
+  line-height: 1.25;
+}
+
+.workspace {
+  background: var(--paper);
+}
+
+.section-heading {
+  max-width: 980px;
+  margin-bottom: 26px;
+}
+
+.control-panel {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.control-panel.compact {
+  grid-template-columns: minmax(220px, 340px) minmax(260px, 1fr);
+}
+
+.age-workspace {
+  background: #f7f3ea;
+}
+
+.age-layout {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.age-panel,
+.recommendation-area {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.age-panel {
+  display: grid;
+  gap: 20px;
+  padding: 22px;
+}
+
+.age-illustration,
+.meaning-art {
+  width: 100%;
+  min-height: 190px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfaf5;
+}
+
+.age-art {
+  position: relative;
+  overflow: hidden;
+}
+
+.age-art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 74% 70%, rgba(194, 139, 40, 0.18) 0 18%, transparent 19%),
+    linear-gradient(135deg, rgba(23, 111, 115, 0.12), rgba(198, 85, 61, 0.10));
+}
+
+.age-head,
+.age-body,
+.age-object {
+  position: absolute;
+  display: block;
+}
+
+.age-head {
+  width: 58px;
+  height: 58px;
+  left: 54px;
+  top: 42px;
+  border-radius: 50%;
+  background: #d99b69;
+  box-shadow: 18px -14px 0 -10px #4d3a2f, -13px -11px 0 -8px #4d3a2f;
+}
+
+.age-head::before,
+.age-head::after {
+  content: "";
+  position: absolute;
+  top: 29px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+.age-head::before {
+  left: 17px;
+}
+
+.age-head::after {
+  right: 17px;
+}
+
+.age-body {
+  width: 118px;
+  height: 86px;
+  left: 24px;
+  top: 100px;
+  border-radius: 58px 58px 10px 10px;
+  background: var(--teal);
+}
+
+.age-object {
+  right: 34px;
+  bottom: 36px;
+  width: 78px;
+  height: 58px;
+  border: 5px solid var(--ink);
+  border-radius: 8px;
+  background: #fffdf5;
+}
+
+.age-object::before,
+.age-object::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--ink);
+}
+
+.age-object::before {
+  top: 17px;
+  width: 42px;
+}
+
+.age-object::after {
+  top: 33px;
+  width: 28px;
+}
+
+.age-art.teen .age-body {
+  background: var(--blue);
+}
+
+.age-art.teen .age-object {
+  width: 66px;
+  height: 48px;
+  border-radius: 6px;
+}
+
+.age-art.adult .age-body {
+  background: var(--tomato);
+}
+
+.age-art.adult .age-object {
+  border-radius: 50%;
+}
+
+.age-art.adult .age-object::before {
+  transform: rotate(-35deg);
+  top: 30px;
+  width: 46px;
+}
+
+.age-art.adult .age-object::after {
+  transform: rotate(35deg);
+  top: 27px;
+  left: 36px;
+  width: 24px;
+}
+
+.age-art.older-adult .age-head {
+  box-shadow: 18px -14px 0 -10px #d9d8d3, -13px -11px 0 -8px #d9d8d3;
+}
+
+.age-art.older-adult .age-body {
+  background: var(--sage);
+}
+
+.age-art.older-adult .age-object {
+  border-radius: 50%;
+}
+
+.age-art.young-adult .age-body {
+  background: var(--teal);
+}
+
+.age-summary h3,
+.recommendation-header h3 {
+  margin: 5px 0 8px;
+  font-size: 24px;
+}
+
+.age-summary p,
+.recommendation-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.priority-list {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.priority-list li {
+  border-left: 4px solid var(--teal);
+  padding: 8px 0 8px 12px;
+  color: var(--muted);
+}
+
+.recommendation-area {
+  padding: 22px;
+}
+
+.recommendation-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+.recommendation-header p {
+  max-width: 420px;
+}
+
+.recommendation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.food-card {
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  background: #fbfaf5;
+}
+
+.food-card h4 {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.18;
+}
+
+.food-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.food-card dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  margin: 0;
+}
+
+.food-card div {
+  display: grid;
+  gap: 2px;
+}
+
+.food-card dt {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.food-card dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+}
+
+label {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+select,
+input[type="range"] {
+  width: 100%;
+}
+
+select {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--ink);
+  padding: 0 12px;
+}
+
+output {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  min-height: 28px;
+  border-radius: 6px;
+  background: #e7ece3;
+  color: var(--ink);
+}
+
+.viz-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.chart-shell,
+.detail-panel {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.chart-shell {
+  padding: 18px;
+}
+
+.chart-shell.tall {
+  min-height: 560px;
+}
+
+.compare-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.food-visual-panel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+
+.food-visual-panel h3 {
+  margin: 5px 0 16px;
+  font-size: 24px;
+}
+
+.food-visual-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.food-visual-card {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfaf5;
+  padding: 12px;
+}
+
+.food-art {
+  position: relative;
+  width: 96px;
+  aspect-ratio: 13 / 9;
+  border-radius: 8px;
+  background: #fff7df;
+  overflow: hidden;
+}
+
+.food-art::before,
+.food-art::after {
+  content: "";
+  position: absolute;
+  display: block;
+}
+
+.food-art.fruit::before {
+  width: 36px;
+  height: 36px;
+  left: 20px;
+  top: 30px;
+  border-radius: 50%;
+  background: #d9573f;
+}
+
+.food-art.fruit::after {
+  width: 38px;
+  height: 38px;
+  right: 22px;
+  top: 29px;
+  border-radius: 50%;
+  background: #f0bd35;
+}
+
+.food-art.vegetable {
+  background: #edf6e9;
+}
+
+.food-art.vegetable::before {
+  width: 70px;
+  height: 32px;
+  left: 13px;
+  top: 43px;
+  border-radius: 40px 40px 14px 14px;
+  background: #d86b3e;
+}
+
+.food-art.vegetable::after {
+  width: 64px;
+  height: 50px;
+  left: 18px;
+  top: 12px;
+  border-radius: 50% 50% 30% 30%;
+  background: #5f9b5c;
+  clip-path: polygon(50% 0, 78% 45%, 100% 18%, 82% 82%, 50% 100%, 18% 82%, 0 18%, 22% 45%);
+}
+
+.food-art.baked {
+  background: #fff1e8;
+}
+
+.food-art.baked::before {
+  width: 72px;
+  height: 50px;
+  left: 12px;
+  top: 30px;
+  border-radius: 48px 48px 15px 15px;
+  background: #c98545;
+}
+
+.food-art.baked::after {
+  width: 48px;
+  height: 9px;
+  left: 24px;
+  top: 47px;
+  border-radius: 999px;
+  background: #f2c07a;
+}
+
+.food-art.drink {
+  background: #eaf6f7;
+}
+
+.food-art.drink::before {
+  width: 44px;
+  height: 62px;
+  left: 28px;
+  top: 16px;
+  border: 5px solid var(--teal);
+  border-top-width: 7px;
+  border-radius: 6px 6px 14px 14px;
+  background: linear-gradient(to bottom, #f8fbff 0 35%, #f0b23b 36% 100%);
+}
+
+.food-art.drink::after {
+  width: 42px;
+  height: 7px;
+  left: 23px;
+  top: 10px;
+  border-radius: 999px;
+  background: var(--tomato);
+  transform: rotate(28deg);
+}
+
+.food-visual-card h4 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.food-visual-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.chart-title-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: start;
+}
+
+.chart-title-row h3,
+.detail-panel h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.chart-title-row p,
+.detail-panel p {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+#resetSelection {
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #eef1e8;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0 12px;
+}
+
+svg {
+  width: 100%;
+  display: block;
+  overflow: visible;
+}
+
+#scatterPlot {
+  height: 520px;
+}
+
+#boxPlot {
+  height: 560px;
+}
+
+text.axis,
+.plot-label {
+  fill: var(--muted);
+  font-size: 12px;
+}
+
+line.axis,
+path.axis,
+.grid-line {
+  stroke: var(--line);
+}
+
+.point {
+  cursor: pointer;
+  stroke: #fff;
+  stroke-width: 1.5;
+  transition: r 140ms ease, opacity 140ms ease;
+}
+
+.point:hover,
+.point.is-selected {
+  r: 7;
+  stroke: var(--ink);
+}
+
+.box-line,
+.whisker,
+.median {
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+
+.box-fill {
+  fill: rgba(23, 111, 115, 0.18);
+  stroke: var(--teal);
+  stroke-width: 1.5;
+}
+
+.detail-panel {
+  padding: 22px;
+}
+
+.detail-panel dl {
+  display: grid;
+  gap: 10px;
+  margin: 20px 0 0;
+}
+
+.detail-panel div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 9px;
+}
+
+.detail-panel dt {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.detail-panel dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 5;
+  pointer-events: none;
+  max-width: 260px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--shadow);
+  padding: 10px 12px;
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.meaning {
+  background: #f1efe5;
+}
+
+.meaning-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.meaning-grid.four-up {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.meaning-grid article {
+  border-top: 4px solid var(--sage);
+  padding-top: 14px;
+}
+
+.meaning-art {
+  margin-bottom: 12px;
+  min-height: 160px;
+}
+
+.meaning-grid h3 {
+  margin: 0 0 8px;
+}
+
+.meaning-grid p {
+  margin: 0;
+}
+
+.finale {
+  min-height: 56vh;
+  display: grid;
+  align-content: center;
+  background: var(--ink);
+  color: #fffdf5;
+}
+
+.finale p {
+  color: rgba(255, 253, 245, 0.78);
+}
+
+@media (max-width: 900px) {
+  .story-band,
+  .viz-layout,
+  .control-panel,
+  .control-panel.compact,
+  .age-layout,
+  .compare-layout,
+  .meaning-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .meaning-grid.four-up {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .recommendation-header {
+    display: grid;
+  }
+
+  .recommendation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .food-visual-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .detail-panel {
+    min-height: 0;
+  }
+
+  .topbar {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero {
+    min-height: 88vh;
+  }
+
+  .topbar a {
+    padding: 7px 10px;
+    font-size: 14px;
+  }
+
+  #scatterPlot {
+    height: 430px;
+  }
+
+  #boxPlot {
+    height: 620px;
+  }
+
+  .food-visual-card {
+    grid-template-columns: 82px minmax(0, 1fr);
+  }
+
+  .food-art {
+    width: 82px;
+  }
+
+  .food-visual-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .meaning-grid.four-up {
+    grid-template-columns: 1fr;
+  }
+}
