@@ -103,6 +103,8 @@
     recommendationNote: document.querySelector("#recommendationNote"),
     recommendationCards: document.querySelector("#recommendationCards"),
     tooltip: document.querySelector("#tooltip"),
+    welcomeModal: document.querySelector("#welcomeModal"),
+    enterSite: document.querySelector("#enterSite"),
     resetSelection: document.querySelector("#resetSelection"),
     statFoods: document.querySelector("#statFoods"),
     statCategories: document.querySelector("#statCategories")
@@ -191,7 +193,15 @@
       updateDetails(null);
       renderScatter();
     });
+    els.enterSite.addEventListener("click", closeWelcomeModal);
+    els.welcomeModal.addEventListener("click", (event) => {
+      if (event.target === els.welcomeModal) closeWelcomeModal();
+    });
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !els.welcomeModal.hidden) closeWelcomeModal();
+    });
     window.addEventListener("resize", debounce(renderAll, 120));
+    els.enterSite.focus();
   }
 
   function filteredData() {
@@ -433,7 +443,7 @@
 
   function showRangeTooltip(event, group, metric) {
     els.tooltip.hidden = false;
-    els.tooltip.innerHTML = `<strong>${escapeHtml(group.category)}</strong><br>Median ${escapeHtml(metric.label)}: ${formatValue(group.stats.median, metric)}<br>Range: ${formatValue(group.stats.min, metric)} to ${formatValue(group.stats.max, metric)}<br>${group.values.length} foods`;
+    els.tooltip.innerHTML = `<strong>${escapeHtml(group.category)}</strong><br>Median ${escapeHtml(metric.label)}: ${formatValue(group.stats.median, metric)}<br>Range: ${formatValue(group.stats.min, metric)} to ${formatValue(group.stats.max, metric)}<br>${group.values.length} foods<div class="tooltip-list">${formatCategoryFoods(group.rows, metric)}</div>`;
     moveTooltip(event);
   }
 
@@ -442,12 +452,24 @@
     const bounds = event.target && event.target.getBoundingClientRect ? event.target.getBoundingClientRect() : null;
     const clientX = Number.isFinite(event.clientX) && event.clientX > 0 ? event.clientX : (bounds ? bounds.right : 0);
     const clientY = Number.isFinite(event.clientY) && event.clientY > 0 ? event.clientY : (bounds ? bounds.top : 0);
-    els.tooltip.style.left = `${Math.min(window.innerWidth - 280, clientX + offset)}px`;
-    els.tooltip.style.top = `${Math.min(window.innerHeight - 150, clientY + offset)}px`;
+    const tooltipWidth = els.tooltip.offsetWidth || 280;
+    const tooltipHeight = els.tooltip.offsetHeight || 150;
+    els.tooltip.style.left = `${Math.max(14, Math.min(window.innerWidth - tooltipWidth - 14, clientX + offset))}px`;
+    els.tooltip.style.top = `${Math.max(14, Math.min(window.innerHeight - tooltipHeight - 14, clientY + offset))}px`;
   }
 
   function hideTooltip() {
     els.tooltip.hidden = true;
+  }
+
+  function closeWelcomeModal() {
+    els.welcomeModal.hidden = true;
+  }
+
+  function formatCategoryFoods(rows, metric) {
+    return rows
+      .map((row) => `<div><span>${escapeHtml(row.food_name)}</span><strong>${formatValue(row[metric.key], metric)}</strong></div>`)
+      .join("");
   }
 
   function escapeHtml(value) {
@@ -465,14 +487,15 @@
     const categoryMap = data.reduce((map, row) => {
       if (!Number.isFinite(row[state.boxNutrient])) return map;
       if (!map.has(row.category)) map.set(row.category, []);
-      map.get(row.category).push(row[state.boxNutrient]);
+      map.get(row.category).push(row);
       return map;
     }, new Map());
 
     const groups = [...categoryMap.entries()]
-      .map(([category, values]) => {
-        const sortedValues = values.sort((a, b) => a - b);
-        return { category, values: sortedValues, stats: summarize(sortedValues) };
+      .map(([category, rows]) => {
+        const sortedRows = rows.sort((a, b) => b[state.boxNutrient] - a[state.boxNutrient] || a.food_name.localeCompare(b.food_name));
+        const values = sortedRows.map((row) => row[state.boxNutrient]).sort((a, b) => a - b);
+        return { category, rows: sortedRows, values, stats: summarize(values) };
       })
       .sort((a, b) => b.stats.median - a.stats.median || b.values.length - a.values.length || a.category.localeCompare(b.category))
       .slice(0, state.categoryLimit);

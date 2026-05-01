@@ -34,6 +34,53 @@ input {
   font: inherit;
 }
 
+.welcome-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(23, 33, 27, 0.76);
+  backdrop-filter: blur(8px);
+}
+
+.welcome-modal[hidden] {
+  display: none;
+}
+
+.welcome-panel {
+  width: min(520px, 100%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 8px;
+  background: #fffdf5;
+  box-shadow: var(--shadow);
+  padding: clamp(28px, 5vw, 46px);
+  color: var(--ink);
+}
+
+.welcome-panel h2 {
+  margin: 8px 0 14px;
+  font-size: clamp(34px, 5vw, 56px);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.welcome-panel p {
+  margin: 0 0 24px;
+  color: var(--muted);
+}
+
+.welcome-panel button {
+  border: 0;
+  border-radius: 8px;
+  background: var(--teal);
+  color: #fffdf5;
+  padding: 11px 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
 .hero {
   min-height: 92vh;
   display: grid;
@@ -47,6 +94,21 @@ input {
 
 .topbar {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-credit {
+  margin: 0;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.topbar__links {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 10px;
 }
@@ -916,7 +978,9 @@ path.axis,
   position: fixed;
   z-index: 5;
   pointer-events: none;
-  max-width: 260px;
+  width: min(360px, calc(100vw - 28px));
+  max-height: min(420px, calc(100vh - 28px));
+  overflow: auto;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.96);
@@ -924,6 +988,31 @@ path.axis,
   padding: 10px 12px;
   color: var(--ink);
   font-size: 13px;
+}
+
+.tooltip-list {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.tooltip-list div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+}
+
+.tooltip-list span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tooltip-list strong {
+  font-variant-numeric: tabular-nums;
 }
 
 .meaning {
@@ -1002,6 +1091,11 @@ path.axis,
   }
 
   .topbar {
+    display: grid;
+    justify-content: stretch;
+  }
+
+  .topbar__links {
     justify-content: flex-start;
   }
 }
