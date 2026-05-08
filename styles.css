@@ -1147,8 +1147,52 @@ path.axis,
 }
 
 .meaning-grid article {
+  position: relative;
   border-top: 4px solid var(--sage);
   padding-top: 14px;
+}
+
+.meaning-food-icon {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 220px);
+  aspect-ratio: 1;
+  margin: 0 0 16px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background-image: url("assets/age-group-plates.png");
+  background-repeat: no-repeat;
+  background-size: 400% 100%;
+  box-shadow: 0 16px 34px rgba(33, 43, 36, 0.14);
+  cursor: zoom-in;
+  outline: none;
+  transform-origin: center;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.meaning-food-icon:hover,
+.meaning-food-icon:focus {
+  z-index: 3;
+  border-color: rgba(23, 111, 115, 0.62);
+  box-shadow: 0 26px 58px rgba(33, 43, 36, 0.24);
+  transform: translateY(-10px) scale(1.14);
+}
+
+.teen-icon {
+  background-position: 0% center;
+}
+
+.young-icon {
+  background-position: 33.333% center;
+}
+
+.adult-icon {
+  background-position: 66.666% center;
+}
+
+.older-icon {
+  background-position: 100% center;
 }
 
 .meaning-art {
