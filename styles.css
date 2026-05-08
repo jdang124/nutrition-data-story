@@ -1176,6 +1176,59 @@ path.axis,
   object-fit: cover;
 }
 
+.data-badge {
+  position: absolute;
+  z-index: 2;
+  display: inline-grid;
+  place-items: center;
+  min-width: 62px;
+  min-height: 28px;
+  border: 1px solid rgba(255, 253, 245, 0.76);
+  border-radius: 999px;
+  padding: 4px 10px;
+  box-shadow: 0 10px 20px rgba(23, 33, 27, 0.18);
+  color: #fffdf5;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+.data-badge:nth-of-type(1) {
+  left: 10px;
+  top: 10px;
+}
+
+.data-badge:nth-of-type(2) {
+  right: 10px;
+  top: 42%;
+}
+
+.data-badge:nth-of-type(3) {
+  left: 12px;
+  bottom: 12px;
+}
+
+.badge-protein {
+  background: rgba(68, 108, 149, 0.94);
+}
+
+.badge-micro {
+  background: rgba(23, 111, 115, 0.94);
+}
+
+.badge-energy,
+.badge-calories {
+  background: rgba(194, 139, 40, 0.94);
+}
+
+.badge-fat {
+  background: rgba(198, 85, 61, 0.94);
+}
+
+.badge-carbs {
+  background: rgba(103, 128, 107, 0.94);
+}
+
 .meaning-food-icon:hover,
 .meaning-food-icon:focus {
   z-index: 3;
