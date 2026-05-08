@@ -687,6 +687,13 @@ output {
   padding: 18px;
 }
 
+.chart-caption {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
 .chart-shell.tall {
   min-height: 560px;
 }
@@ -1155,8 +1162,8 @@ path.axis,
 .meaning-food-icon {
   position: relative;
   z-index: 1;
-  width: min(100%, 220px);
-  aspect-ratio: 1;
+  width: 100%;
+  aspect-ratio: 2 / 1;
   margin: 0 0 16px;
   overflow: hidden;
   border: 1px solid var(--line);
