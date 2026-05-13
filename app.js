@@ -123,6 +123,8 @@
     recommendationNote: document.querySelector("#recommendationNote"),
     recommendationCards: document.querySelector("#recommendationCards"),
     tooltip: document.querySelector("#tooltip"),
+    welcomeModal: document.querySelector("#welcomeModal"),
+    enterSite: document.querySelector("#enterSite"),
     resetSelection: document.querySelector("#resetSelection"),
     statFoods: document.querySelector("#statFoods"),
     statCategories: document.querySelector("#statCategories")
@@ -211,7 +213,22 @@
       updateDetails(null);
       renderScatter();
     });
+    if (els.enterSite && els.welcomeModal) {
+      els.enterSite.addEventListener("click", closeWelcomeModal);
+      els.welcomeModal.addEventListener("click", (event) => {
+        if (event.target === els.welcomeModal) closeWelcomeModal();
+      });
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !els.welcomeModal.hidden) closeWelcomeModal();
+      });
+      els.enterSite.focus();
+    }
     window.addEventListener("resize", debounce(renderAll, 120));
+  }
+
+  function closeWelcomeModal() {
+    if (!els.welcomeModal) return;
+    els.welcomeModal.hidden = true;
   }
 
   function filteredData() {
