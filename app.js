@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   const data = (window.FOOD_DATA || []).map((row, index) => ({
     id: index,
     food_name: row.food_name,
@@ -30,7 +30,12 @@
       imageClass: "teen",
       description: "A growth-focused view that rewards protein, iron, vitamin C, and enough energy without pushing the highest-calorie foods to the top.",
       priorities: ["Support growth and daily energy", "Look for protein and iron", "Keep calorie density in context"],
-      note: "Ranked for growth support and balanced energy.",
+      note: "A breakfast or snack-style set focused on protein, iron, vitamin C, and steady energy.",
+      recommendations: [
+        { name: "Yogurt, Greek, Blueberry, CHOBANI", reason: "A familiar high-protein option that works well as a quick breakfast or snack." },
+        { name: "Bread, sweet potato, toasted", reason: "Adds steady energy with stronger protein and iron than most fruit-only choices." },
+        { name: "Strawberries, raw", reason: "Brings vitamin C and freshness without adding much fat or calorie density." }
+      ],
       weights: { protein: 0.32, iron: 0.22, vitamin_c: 0.18, caloriesTarget: 0.18, fatLow: 0.10 },
       calorieTarget: 220
     },
@@ -41,7 +46,12 @@
       imageClass: "young-adult",
       description: "A flexible view for busy schedules: higher protein and micronutrients, with moderate calories and fat so the foods can fit into everyday meals.",
       priorities: ["Prioritize protein for fullness", "Favor vitamin C and iron when possible", "Balance calories, carbs, and fat"],
-      note: "Ranked for protein, micronutrients, and practical calorie balance.",
+      note: "A practical meal-and-fruit set for protein, energy, and useful micronutrients.",
+      recommendations: [
+        { name: "Orange chicken", reason: "Works as a main-dish option with meaningful protein for a busy schedule." },
+        { name: "Beans and rice, with tomatoes", reason: "Feels like a complete meal and balances carbs, protein, iron, and moderate fat." },
+        { name: "Mango, raw", reason: "Adds vitamin C and a low-fat fruit option alongside the more filling foods." }
+      ],
       weights: { protein: 0.34, vitamin_c: 0.18, iron: 0.16, caloriesTarget: 0.18, fatLow: 0.14 },
       calorieTarget: 260
     },
@@ -52,7 +62,12 @@
       imageClass: "adult",
       description: "A long-term health view that favors nutrient value while being more cautious about high calories and fat.",
       priorities: ["Watch calorie density", "Prefer foods with useful nutrients", "Notice fat and carb trade-offs"],
-      note: "Ranked for nutrient value with a stronger calorie and fat check.",
+      note: "A balanced plate-style set with leaner protein, vegetables, and controlled calorie density.",
+      recommendations: [
+        { name: "Pork with chili and tomatoes", reason: "Provides strong protein while staying lower in fat than many prepared foods in the dataset." },
+        { name: "Sweet potato, casserole or mashed", reason: "Adds a moderate-calorie side with vitamin C and a softer carb source." },
+        { name: "Tomatoes, raw", reason: "Keeps the plate lighter while adding vitamin C and very low fat." }
+      ],
       weights: { caloriesLow: 0.24, fatLow: 0.22, protein: 0.20, vitamin_c: 0.18, iron: 0.16 },
       calorieTarget: 220
     },
@@ -63,7 +78,12 @@
       imageClass: "older-adult",
       description: "A nutrient-dense view that emphasizes protein and micronutrients while keeping calories and fat from crowding out the score.",
       priorities: ["Keep protein visible", "Value iron and vitamin C", "Avoid letting high calories dominate"],
-      note: "Ranked for nutrient density and steadier calorie balance.",
+      note: "A softer, easier-to-eat set that keeps protein and micronutrients visible.",
+      recommendations: [
+        { name: "Soup, potato with meat", reason: "A softer prepared option that adds protein without becoming extremely calorie dense." },
+        { name: "Kefir, lowfat, strawberry, LIFEWAY", reason: "Provides protein in a low-fat dairy option that is easy to drink." },
+        { name: "Sweet potato, canned, mashed", reason: "Adds a soft vegetable option with iron and vitamin C in a moderate portion." }
+      ],
       weights: { protein: 0.32, vitamin_c: 0.22, iron: 0.18, caloriesLow: 0.16, fatLow: 0.12 },
       calorieTarget: 210
     }
@@ -103,8 +123,6 @@
     recommendationNote: document.querySelector("#recommendationNote"),
     recommendationCards: document.querySelector("#recommendationCards"),
     tooltip: document.querySelector("#tooltip"),
-    welcomeModal: document.querySelector("#welcomeModal"),
-    enterSite: document.querySelector("#enterSite"),
     resetSelection: document.querySelector("#resetSelection"),
     statFoods: document.querySelector("#statFoods"),
     statCategories: document.querySelector("#statCategories")
@@ -193,15 +211,7 @@
       updateDetails(null);
       renderScatter();
     });
-    els.enterSite.addEventListener("click", closeWelcomeModal);
-    els.welcomeModal.addEventListener("click", (event) => {
-      if (event.target === els.welcomeModal) closeWelcomeModal();
-    });
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && !els.welcomeModal.hidden) closeWelcomeModal();
-    });
     window.addEventListener("resize", debounce(renderAll, 120));
-    els.enterSite.focus();
   }
 
   function filteredData() {
@@ -441,35 +451,14 @@
     moveTooltip(event);
   }
 
-  function showRangeTooltip(event, group, metric) {
-    els.tooltip.hidden = false;
-    els.tooltip.innerHTML = `<strong>${escapeHtml(group.category)}</strong><br>Median ${escapeHtml(metric.label)}: ${formatValue(group.stats.median, metric)}<br>Range: ${formatValue(group.stats.min, metric)} to ${formatValue(group.stats.max, metric)}<br>${group.values.length} foods<div class="tooltip-list">${formatCategoryFoods(group.rows, metric)}</div>`;
-    moveTooltip(event);
-  }
-
   function moveTooltip(event) {
     const offset = 14;
-    const bounds = event.target && event.target.getBoundingClientRect ? event.target.getBoundingClientRect() : null;
-    const clientX = Number.isFinite(event.clientX) && event.clientX > 0 ? event.clientX : (bounds ? bounds.right : 0);
-    const clientY = Number.isFinite(event.clientY) && event.clientY > 0 ? event.clientY : (bounds ? bounds.top : 0);
-    const tooltipWidth = els.tooltip.offsetWidth || 280;
-    const tooltipHeight = els.tooltip.offsetHeight || 150;
-    els.tooltip.style.left = `${Math.max(14, Math.min(window.innerWidth - tooltipWidth - 14, clientX + offset))}px`;
-    els.tooltip.style.top = `${Math.max(14, Math.min(window.innerHeight - tooltipHeight - 14, clientY + offset))}px`;
+    els.tooltip.style.left = `${Math.min(window.innerWidth - 280, event.clientX + offset)}px`;
+    els.tooltip.style.top = `${Math.min(window.innerHeight - 150, event.clientY + offset)}px`;
   }
 
   function hideTooltip() {
     els.tooltip.hidden = true;
-  }
-
-  function closeWelcomeModal() {
-    els.welcomeModal.hidden = true;
-  }
-
-  function formatCategoryFoods(rows, metric) {
-    return rows
-      .map((row) => `<div><span>${escapeHtml(row.food_name)}</span><strong>${formatValue(row[metric.key], metric)}</strong></div>`)
-      .join("");
   }
 
   function escapeHtml(value) {
@@ -484,21 +473,19 @@
 
   function renderBoxPlot() {
     const metric = metricFor(state.boxNutrient);
-    const categoryMap = data.reduce((map, row) => {
-      if (!Number.isFinite(row[state.boxNutrient])) return map;
-      if (!map.has(row.category)) map.set(row.category, []);
-      map.get(row.category).push(row);
-      return map;
-    }, new Map());
+    const counts = [...categoryCounts(data).entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, state.categoryLimit)
+      .map(([category]) => category);
 
-    const groups = [...categoryMap.entries()]
-      .map(([category, rows]) => {
-        const sortedRows = rows.sort((a, b) => b[state.boxNutrient] - a[state.boxNutrient] || a.food_name.localeCompare(b.food_name));
-        const values = sortedRows.map((row) => row[state.boxNutrient]).sort((a, b) => a - b);
-        return { category, rows: sortedRows, values, stats: summarize(values) };
-      })
-      .sort((a, b) => b.stats.median - a.stats.median || b.values.length - a.values.length || a.category.localeCompare(b.category))
-      .slice(0, state.categoryLimit);
+    const groups = counts.map((category) => {
+      const values = data
+        .filter((row) => row.category === category)
+        .map((row) => row[state.boxNutrient])
+        .filter(Number.isFinite)
+        .sort((a, b) => a - b);
+      return { category, values, stats: summarize(values) };
+    }).filter((group) => group.values.length);
     renderFoodVisuals(groups, metric);
 
     els.boxPlot.style.height = `${Math.max(560, groups.length * 46 + 96)}px`;
@@ -560,22 +547,13 @@
         y2: center,
         stroke: color
       }));
-      const medianDot = createSvgElement("circle", {
+      els.boxPlot.appendChild(createSvgElement("circle", {
         class: "nutrient-dot",
         cx: x(median),
         cy: center,
         r: 7,
-        fill: color,
-        tabindex: 0,
-        role: "img",
-        "aria-label": `${group.category} median ${metric.label}: ${formatValue(median, metric)}`
-      });
-      medianDot.addEventListener("mouseenter", (event) => showRangeTooltip(event, group, metric));
-      medianDot.addEventListener("mousemove", moveTooltip);
-      medianDot.addEventListener("mouseleave", hideTooltip);
-      medianDot.addEventListener("focus", (event) => showRangeTooltip(event, group, metric));
-      medianDot.addEventListener("blur", hideTooltip);
-      els.boxPlot.appendChild(medianDot);
+        fill: color
+      }));
       const valueLabel = createSvgElement("text", {
         class: "value-label",
         x: Math.min(margin.left + innerWidth + 10, x(median) + 12),
@@ -625,12 +603,13 @@
       reason.textContent = recommendationReason(row, profile);
 
       const list = document.createElement("dl");
-      allMetrics.forEach((metric) => {
+      ["calories", "protein", "fat", "iron"].forEach((key) => {
+        const metric = metricFor(key);
         const item = document.createElement("div");
         const dt = document.createElement("dt");
         const dd = document.createElement("dd");
         dt.textContent = metric.label;
-        dd.textContent = formatValue(row[metric.key], metric);
+        dd.textContent = formatValue(row[key], metric);
         item.append(dt, dd);
         list.appendChild(item);
       });
@@ -705,12 +684,29 @@
   }
 
   function buildRecommendations(profile, limit) {
+    const curated = (profile.recommendations || [])
+      .map((recommendation) => {
+        const row = data.find((item) => item.food_name === recommendation.name);
+        return row ? { ...row, recommendationReasonOverride: recommendation.reason } : null;
+      })
+      .filter(Boolean)
+      .slice(0, limit);
+
+    if (curated.length === limit) return curated;
+
     const selected = [];
     const seenCategories = new Set();
-    const scored = shuffle(data
+    curated.forEach((row) => {
+      selected.push(row);
+      seenCategories.add(row.category);
+    });
+
+    const scored = data
+      .filter((row) => !selected.some((item) => item.id === row.id))
+      .filter((row) => !isIngredientLike(row))
       .map((row) => ({ ...row, recommendationScore: scoreFood(row, profile) }))
       .sort((a, b) => b.recommendationScore - a.recommendationScore)
-      .slice(0, Math.min(data.length, 36)));
+      .slice(0, Math.min(data.length, 36));
 
     scored.forEach((row) => {
       if (selected.length >= limit) return;
@@ -729,13 +725,9 @@
     return selected;
   }
 
-  function shuffle(items) {
-    const result = [...items];
-    for (let index = result.length - 1; index > 0; index -= 1) {
-      const swapIndex = Math.floor(Math.random() * (index + 1));
-      [result[index], result[swapIndex]] = [result[swapIndex], result[index]];
-    }
-    return result;
+  function isIngredientLike(row) {
+    const name = row.food_name.toLowerCase();
+    return ["flour", "peel", "paste", "syrup", "topping", "dressing", "oil", "leaves"].some((term) => name.includes(term));
   }
 
   function scoreFood(row, profile) {
@@ -770,6 +762,8 @@
   }
 
   function recommendationReason(row, profile) {
+    if (row.recommendationReasonOverride) return row.recommendationReasonOverride;
+
     const strongest = [
       { key: "protein", label: "protein" },
       { key: "vitamin_c", label: "vitamin C" },
@@ -826,3 +820,4 @@
   initControls();
   renderAll();
 })();
+
